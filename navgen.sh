@@ -16,7 +16,11 @@ parsedir ()
 		name=${file%.html}
 		if [ -f $file -a "${name}" != "$file" ]
 		then
-			echo "<li><a href=\"${base}${file}\">${name}</a></li>"
+			noindex=$(grep -Eo '<!-- NOINDEX -->' ${file})
+			if [ -z "${noindex}" ]
+			then
+				echo "<li><a href=\"${base}${file}\">${name}</a></li>"
+			fi
 		fi
 	done
 
